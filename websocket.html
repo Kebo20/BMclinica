@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+        <script src="jquery-3.2.1.min.js"></script>
+       <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+       
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+       
+       <link rel="stylesheet" href="chat.css" >
+       
+      
+   </head>
+   <body>
+       
+       <div class="container">
+       	<label id="nombre"></label>
+    <div class="row">
+    	
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
+                            </span>Refresh</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-ok-sign">
+                            </span>Available</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-remove">
+                            </span>Busy</a></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-time"></span>
+                                Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-off"></span>
+                                Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat"> </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="Mensaje" type="text" class="form-control input-sm" placeholder="Escribe un mensaje aquí..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-sm" id="btnEnviar" >
+                                <svg class="bi bi-cursor-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+							     <path fill-rule="evenodd" d="M14.082 2.182a.5.5 0 01.103.557L8.528 15.467a.5.5 0 01-.917-.007L5.57 10.694.803 8.652a.5.5 0 01-.006-.916l12.728-5.657a.5.5 0 01.556.103z" clip-rule="evenodd"/>
+							   </svg>
+							</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+       <li style="display:none" id="plantillaE" class="right clearfix">
+           <span class="chat-img pull-right">
+             <img src="https://images.vexels.com/media/users/3/135247/isolated/preview/e70a6296c2a79dc7a56ab05b103f38e8-signo-de-usuario-con-fondo-by-vexels.png"class="img-circle" width="40px" />
+           </span>
+            <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font Nombre pull-right" >Jack Sparrow</strong> 
+                     </div>
+                      
+                   
+                    <div class="pull-left">
+                    	<small class="text-muted Tiempo">
+                        12/02/2015 </small>
+                        <br>
+                        <p class="Mensaje ">
+                               Mensaje
+                        </p>
+                    </div>
+                </div>
+            </li>
+
+
+
+            <li style="display:none" id="plantillaR" class="left clearfix">
+           <span class="chat-img pull-left">
+             <img src="https://images.vexels.com/media/users/3/135118/isolated/preview/676bf0e9f3c16649cd7f426c6dcd755a-signo-de-usuario-plana-con-fondo-redondo-by-vexels.png"class="img-circle"  width="40px"/>
+           </span>
+            <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font Nombre pull-left" >Jack Sparrow</strong> 
+                        
+                    </div>
+                    
+                    <div class="pull-right">
+                    	<small class="text-muted pull-right Tiempo">
+                         12/02/2015 </small>
+                        <p class="Mensaje ">
+                               Mensaje
+                        </p>
+                    </div>
+                </div>
+            </li>
+       
+       
+    <script type="text/javascript">
+       var ws;
+          function IniciarConexion(){
+                //ws= new WebSocket("ws://achex.ca:4010");
+                ws= new WebSocket("ws://127.0.0.1:12345");
+                ws.onopen= function(){
+                    
+                     ws.send('{"setID":"MichatRoom","passwd":"12345"}');
+                     alert("conexione establecida");
+                }
+                ws.onmessage= function(Mensajes){
+                  console.log(Mensajes);
+                    var MensajesObtenidos=Mensajes.data;
+                    var objeto= jQuery.parseJSON(MensajesObtenidos);
+                    console.log(objeto.NombreU);
+                    if((objeto.ContenidoM!=null)&&(objeto.NombreU!=null)){
+                        // copiar el item del chat y anexarlo al chat
+                        if ($("#nombre").val()==objeto.NombreU) {
+                        $( "#plantillaE" ).clone().appendTo( ".chat" );
+                        $('.chat #plantillaE').show(10);
+                        $('.chat #plantillaE .Nombre').html(objeto.NombreU);
+                        $('.chat #plantillaE .Mensaje').html(objeto.ContenidoM);
+             
+                         var formattedDate = new Date();
+                         var d = formattedDate.getUTCDate()-parseInt(1);
+                         var m =   parseInt(formattedDate.getMonth())+parseInt(1);
+                         var y = formattedDate.getFullYear();
+                         var h= formattedDate.getHours();
+                         var min= formattedDate.getMinutes();
+
+                        Fecha=d+"/"+m+"/"+y+" "+h+":"+min;
+
+                        $('.chat #plantillaE .Tiempo').html(Fecha);
+                        $('.chat #plantillaE').attr("id","");
+
+                        }else{
+                        $( "#plantillaR" ).clone().appendTo( ".chat" );
+
+                        $('.chat #plantillaR').show(10);
+                        $('.chat #plantillaR .Nombre').html(objeto.NombreU);
+                        $('.chat #plantillaR .Mensaje').html(objeto.ContenidoM);
+             
+                         var formattedDate = new Date();
+                         var d = formattedDate.getUTCDate()-parseInt(1);
+                         var m =  parseInt(formattedDate.getMonth())+parseInt(1);
+                         var y = formattedDate.getFullYear();
+                         var h= formattedDate.getHours();
+                         var min= formattedDate.getMinutes();
+
+                        Fecha=d+"/"+m+"/"+y+" "+h+":"+min;
+
+                        $('.chat #plantillaR .Tiempo').html(Fecha);
+                        $('.chat #plantillaR').attr("id","");
+                        }
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                }
+                ws.onclose= function(){
+                alert("Conexión Cerrada");
+                }
+          }
+          IniciarConexion();
+          
+       </script>
+      <script>
+          var Nombre= prompt("Nombre:");
+          $("#nombre").val(Nombre);
+          mensaje=$('#Mensaje').val();
+          
+       		$('#btnEnviar').click(function(){
+
+			     ws.send('{"to":"MichatRoom","NombreU":"'+Nombre+'","ContenidoM":"'+mensaje+'"}');
+           
+           $('#Mensaje').val("");
+           //alert(mensaje)
+       });
+
+
+
+
+var promise = new Promise(function(resolve, reject) {
+  
+  function sayHello() {
+    resolve('Hello World!')
+  }
+
+  reject('Something went wrong!!')
+
+  setTimeout(sayHello, 1000)
+
+})
+
+promise
+  .then(function(message) {
+    console.log('ok:'+message)
+  })
+  .catch(function(err) {
+    console.error('ERROR: ' + err)
+  })
+       </script>
+   </body>
+</html>

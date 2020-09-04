@@ -1,0 +1,21 @@
+{
+  "certificado":"RGlCR3ZHaEM1RU5ZWEl4Tw==.p12",
+  "pem":"certificate.pem",
+  "cer":"certificate.cer",
+  "passcert":"YX2mttDf7r8EUJGx",
+  "empresa":{
+      "tipodoc":6,
+      "ruc":"20561370096",
+      "razonsocial":"PRECISA DIAGNOSTICA S.A.C.",
+      "direccion":"CAL. FRANCISCO CABRERA 130",
+      "ubigeo":"140101",
+      "departamento":"LAMBAYEQUE",
+      "provincia":"CHICLAYO",
+      "distrito":"CHICLAYO",
+      "urbanizacion":"URB. CERCADO DE CHICLAYO",
+      "resolucion":"113-SUNAT/2018"		
+  },
+  "modo":"env",
+  "usersunat":"FACTELE1",
+  "passunat":"VShqEugp2nYd"
+}
